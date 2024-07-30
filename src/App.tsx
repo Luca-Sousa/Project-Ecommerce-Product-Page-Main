@@ -24,6 +24,7 @@ export function App() {
   const [quantity, setQuantity] = useState<number>(0);
   const [activeModalCart, setActiveModalcart] = useState<boolean>(false);
   const [itemAdded, setItemAdded] = useState<boolean>(false);
+  const [cartQuantity, setCartQuantity] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const productsImages: Image[] = [
@@ -72,7 +73,7 @@ export function App() {
   };
 
   const handleMinusQuantity = () => {
-    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
+    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
   };
 
   const toggleModalCart = () => {
@@ -84,6 +85,7 @@ export function App() {
       setErrorMessage("Please select a quantity before adding to cart.");
     } else {
       setItemAdded(true);
+      setCartQuantity(quantity);
       setErrorMessage("");
     }
   };
@@ -125,7 +127,7 @@ export function App() {
           >
             {itemAdded && (
               <div className="w-5 h-4 absolute -top-2 -right-2 rounded-full bg-colorOrange flex items-center justify-center text-xs font-bold text-colorWhite">
-                {quantity}
+                {cartQuantity}
               </div>
             )}
             <IoCartOutline className="size-6" />
@@ -149,9 +151,9 @@ export function App() {
                     <div className="text-colorGrayishBlue flex-1">
                       <h2 className="">Fall Limited Edition Sneakers</h2>
                       <div className="flex gap-1">
-                        $125.00 x {quantity}{" "}
+                        $125.00 x {cartQuantity}{" "}
                         <span className="font-bold text-colorBlack">
-                          ${(125.0 * quantity).toFixed(2)}
+                          ${(125.0 * cartQuantity).toFixed(2)}
                         </span>
                       </div>
                     </div>
