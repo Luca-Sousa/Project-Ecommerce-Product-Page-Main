@@ -19,6 +19,9 @@ export default {
       },
       fontFamily: {
         KumbhSans: "Kumbh Sans"
+      },
+      height: {
+        teste: "calc(100vh - 6rem)"
       }
     },
   },
