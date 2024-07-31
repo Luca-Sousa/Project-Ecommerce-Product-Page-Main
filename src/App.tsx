@@ -1,57 +1,25 @@
 import { IoCartOutline } from "react-icons/io5";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { TiMinus, TiPlus } from "react-icons/ti";
-import Logo from "./assets/images/logo.svg";
-import Avatar from "./assets/images/image-avatar.png";
-import Product1 from "./assets/images/image-product-1.jpg";
-import Product2 from "./assets/images/image-product-2.jpg";
-import Product3 from "./assets/images/image-product-3.jpg";
-import Product4 from "./assets/images/image-product-4.jpg";
-import ProductThumbnail1 from "./assets/images/image-product-1-thumbnail.jpg";
-import ProductThumbnail2 from "./assets/images/image-product-2-thumbnail.jpg";
-import ProductThumbnail3 from "./assets/images/image-product-3-thumbnail.jpg";
-import ProductThumbnail4 from "./assets/images/image-product-4-thumbnail.jpg";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-
-interface Image {
-  src: string;
-  alt: string;
-}
+import { Image } from "./types";
+import { IoMdClose } from "react-icons/io";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { Nav } from "./components/Nav";
+import { productsImages, productsThumbnailImages, menuItens } from "./Datas";
 
 export function App() {
-  const [activeMenuItem, setActiveMenuItem] = useState<string>("collections");
+  const [activeMenuItem, setActiveMenuItem] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
   const [activeModalCart, setActiveModalcart] = useState<boolean>(false);
   const [itemAdded, setItemAdded] = useState<boolean>(false);
   const [cartQuantity, setCartQuantity] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const productsImages: Image[] = [
-    { src: Product1, alt: "Product Image 1" },
-    { src: Product2, alt: "Product Image 2" },
-    { src: Product3, alt: "Product Image 3" },
-    { src: Product4, alt: "Product Image 4" },
-  ];
+  const [activeModalImages, setActiveModalImages] = useState<boolean>(false);
+  const [currentSlideModal, setCurrentSlideModal] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<Image>(productsImages[0]);
-
-  const productsThumbnailImages: Image[] = [
-    { src: ProductThumbnail1, alt: "Product Thumbnail Image 1" },
-    { src: ProductThumbnail2, alt: "Product Thumbnail Image 2" },
-    { src: ProductThumbnail3, alt: "Product Thumbnail Image 3" },
-    { src: ProductThumbnail4, alt: "Product Thumbnail Image 4" },
-  ];
   const [activeThumbnailImage, setThumbnailImage] = useState<Image>(
     productsThumbnailImages[0]
   );
-
-  const menuItens = [
-    { label: "Collections" },
-    { label: "Men" },
-    { label: "Women" },
-    { label: "About" },
-    { label: "Contact" },
-  ];
 
   const handleMenuItems = (page: string) => {
     setActiveMenuItem(page);
@@ -95,123 +63,60 @@ export function App() {
     setQuantity(0);
   };
 
+  const handleOpenModalImages = () => {
+    setActiveModalImages(true);
+  };
+
+  const handleCloseModalImages = () => {
+    setActiveModalImages(false);
+  };
+
+  const handleNextSlide = () => {
+    setCurrentSlideModal((prev) =>
+      prev === productsImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlideModal((prev) =>
+      prev === 0 ? productsImages.length - 1 : prev - 1
+    );
+  };
+
   return (
     <div className="max-w-[1440px] max-h-screen mx-auto h-full">
-      <nav className="max-w-7xl mx-auto flex items-center gap-12 h-24 border-b border-colorGrayishBlue">
-        <img src={Logo} alt="Logo Image" />
-
-        <ul className="h-full flex-1 flex items-center gap-5">
-          {menuItens.map((item) => (
-            <li
-              key={item.label}
-              onClick={() => handleMenuItems(item.label.toLowerCase())}
-              className={`${
-                activeMenuItem === item.label.toLowerCase()
-                  ? "h-full border-colorOrange border-b-4 hover:text-colorVeryDarkBlue"
-                  : "text-colorDarkGrayishBlue border-b-0"
-              } flex items-center hover:text-colorVeryDarkBlue`}
-            >
-              <a href="#">
-                {item.label.split("").map((letter, index) => (
-                  <span key={index}>{letter}</span>
-                ))}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="relative">
-          <button
-            className="text-colorDarkGrayishBlue flex items-center hover:text-colorBlack relative hover:scale-110"
-            onClick={toggleModalCart}
-          >
-            {itemAdded && (
-              <div className="w-5 h-4 absolute -top-2 -right-2 rounded-full bg-colorOrange flex items-center justify-center text-xs font-bold text-colorWhite">
-                {cartQuantity}
-              </div>
-            )}
-            <IoCartOutline className="size-6" />
-          </button>
-
-          {activeModalCart && (
-            <div className="w-96 h-fit absolute -left-1/2 -translate-x-1/2 top-12 rounded-lg bg-colorWhite shadow-default">
-              <h2 className="w-full text-colorBlack font-bold border-b p-6">
-                Cart
-              </h2>
-
-              {itemAdded ? (
-                <div className="px-6 py-8 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <img
-                      className="size-14 rounded-lg"
-                      src={ProductThumbnail1}
-                      alt="Product Thumbnail Image 1"
-                    />
-
-                    <div className="text-colorGrayishBlue flex-1">
-                      <h2 className="">Fall Limited Edition Sneakers</h2>
-                      <div className="flex gap-1">
-                        $125.00 x {cartQuantity}{" "}
-                        <span className="font-bold text-colorBlack">
-                          ${(125.0 * cartQuantity).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <button
-                      className="text-colorGrayishBlue hover:text-colorBlack"
-                      onClick={handleRemoveToCart}
-                    >
-                      <RiDeleteBin5Fill className="size-5 hover:scale-110" />
-                    </button>
-                  </div>
-
-                  <button className="w-full h-12 text-center bg-colorOrange rounded-lg text-colorBlack font-bold hover:bg-colorOrange/60">
-                    Checkout
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-48">
-                  Your cart is empty.
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        <motion.img
-          className="rounded-full size-10 ring-colorOrange hover:ring-2 cursor-pointer"
-          src={Avatar}
-          alt="Image Avatar"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          transition={{ duration: 0.5 }}
-        ></motion.img>
-      </nav>
+      <Nav
+        menuItens={menuItens}
+        activeMenuItem={activeMenuItem}
+        itemAdded={itemAdded}
+        cartQuantity={cartQuantity}
+        activeModalCart={activeModalCart}
+        handleMenuItems={handleMenuItems}
+        toggleModalCart={toggleModalCart}
+        handleRemoveToCart={handleRemoveToCart}
+      />
 
       <div className="h-teste flex items-center justify-center gap-40">
         <div className="flex gap-6 flex-col items-center justify-center">
           <img
-            className="size-[450px] object-cover object-center rounded-xl"
+            className="size-[450px] object-cover object-center rounded-xl cursor-pointer"
             src={selectedImage.src}
             alt={selectedImage.alt}
+            onClick={handleOpenModalImages}
           />
 
           <div className="w-full flex items-center justify-between">
             {productsThumbnailImages.map((thumbnail, index) => (
               <div
                 key={index}
+                onClick={() => handleThumbnailClick(index)}
                 className={`${
                   activeThumbnailImage.src === thumbnail.src
                     ? "ring-colorOrange ring-2 scale-105"
                     : "ring-0"
                 } size-20 rounded-xl overflow-hidden cursor-pointer relative hover:scale-105`}
               >
-                <img
-                  src={thumbnail.src}
-                  alt={thumbnail.alt}
-                  onClick={() => handleThumbnailClick(index)}
-                />
+                <img src={thumbnail.src} alt={thumbnail.alt} />
                 <div
                   className={`${
                     activeThumbnailImage.src === thumbnail.src
@@ -223,6 +128,60 @@ export function App() {
             ))}
           </div>
         </div>
+
+        {activeModalImages && (
+          <div className="fixed inset-0 z-50 bg-colorBlack/75 flex gap-6 flex-col items-center justify-center">
+            <div className="relative">
+              <button
+                className="absolute -left-6 top-1/2 -translate-y-1/2 size-12 bg-colorWhite rounded-full flex items-center justify-center"
+                onClick={handlePrevSlide}
+              >
+                <GrFormPrevious className="size-7 text-colorBlack hover:text-colorOrange" />
+              </button>
+
+              <img
+                className="size-[500px] object-cover object-center rounded-xl"
+                src={productsImages[currentSlideModal].src}
+                alt={productsImages[currentSlideModal].alt}
+              />
+
+              <button
+                className="absolute -right-6 top-1/2 -translate-y-1/2 size-12 bg-colorWhite rounded-full flex items-center justify-center"
+                onClick={handleNextSlide}
+              >
+                <GrFormNext className="size-7 text-colorBlack hover:text-colorOrange" />
+              </button>
+
+              <button
+                className="size-6 absolute inset-0 left-full -translate-x-full -top-10 text-colorWhite hover:scale-125 hover:text-colorOrange"
+                onClick={handleCloseModalImages}
+              >
+                <IoMdClose className="size-full" />
+              </button>
+            </div>
+
+            <div className="w-full flex items-center justify-center gap-8">
+              {productsThumbnailImages.map((thumbnail, index) => (
+                <div
+                  key={index}
+                  onClick={() => setCurrentSlideModal(index)}
+                  className={`${
+                    currentSlideModal === index
+                      ? "ring-colorOrange ring-2 scale-105"
+                      : "ring-0"
+                  } size-20 rounded-xl overflow-hidden cursor-pointer relative hover:scale-105`}
+                >
+                  <img src={thumbnail.src} alt={thumbnail.alt} />
+                  <div
+                    className={`${
+                      currentSlideModal === index ? "block" : "hidden"
+                    } absolute inset-0 bg-colorWhite/70`}
+                  ></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="max-w-md flex flex-col gap-5 relative">
           <h4 className="uppercase text-sm font-bold text-colorGrayishBlue">
