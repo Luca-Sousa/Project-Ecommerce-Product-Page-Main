@@ -17,3 +17,16 @@ export interface NavPros {
   toggleModalCart: () => void;
   handleRemoveToCart: () => void;
 }
+
+export interface CartPros {
+  itemAdded: boolean;
+  cartQuantity: number;
+  handleRemoveToCart: () => void;
+}
+
+export interface SlideImagesProps {
+  selectedImage: Image;
+  activeThumbnailImage: Image;
+  handleOpenModalImages: () => void;
+  handleThumbnailClick: (index: number) => void;
+}

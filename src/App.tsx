@@ -1,11 +1,10 @@
-import { IoCartOutline } from "react-icons/io5";
 import { useState } from "react";
-import { TiMinus, TiPlus } from "react-icons/ti";
 import { Image } from "./types";
-import { IoMdClose } from "react-icons/io";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { Nav } from "./components/Nav";
 import { productsImages, productsThumbnailImages, menuItens } from "./Datas";
+import { SlideImages } from "./components/SlideImages";
+import { ModalImagens } from "./components/ModalImagens";
+import { QuantityItemsCart } from "./components/QuantityItemsCart";
 
 export function App() {
   const [activeMenuItem, setActiveMenuItem] = useState<string>("");
@@ -97,90 +96,21 @@ export function App() {
       />
 
       <div className="h-teste flex items-center justify-center gap-40">
-        <div className="flex gap-6 flex-col items-center justify-center">
-          <img
-            className="size-[450px] object-cover object-center rounded-xl cursor-pointer"
-            src={selectedImage.src}
-            alt={selectedImage.alt}
-            onClick={handleOpenModalImages}
-          />
-
-          <div className="w-full flex items-center justify-between">
-            {productsThumbnailImages.map((thumbnail, index) => (
-              <div
-                key={index}
-                onClick={() => handleThumbnailClick(index)}
-                className={`${
-                  activeThumbnailImage.src === thumbnail.src
-                    ? "ring-colorOrange ring-2 scale-105"
-                    : "ring-0"
-                } size-20 rounded-xl overflow-hidden cursor-pointer relative hover:scale-105`}
-              >
-                <img src={thumbnail.src} alt={thumbnail.alt} />
-                <div
-                  className={`${
-                    activeThumbnailImage.src === thumbnail.src
-                      ? "block"
-                      : "hidden"
-                  } absolute inset-0 bg-colorWhite/70`}
-                ></div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SlideImages
+          selectedImage={selectedImage}
+          activeThumbnailImage={activeThumbnailImage}
+          handleOpenModalImages={handleOpenModalImages}
+          handleThumbnailClick={handleThumbnailClick}
+        />
 
         {activeModalImages && (
-          <div className="fixed inset-0 z-50 bg-colorBlack/75 flex gap-6 flex-col items-center justify-center">
-            <div className="relative">
-              <button
-                className="absolute -left-6 top-1/2 -translate-y-1/2 size-12 bg-colorWhite rounded-full flex items-center justify-center"
-                onClick={handlePrevSlide}
-              >
-                <GrFormPrevious className="size-7 text-colorBlack hover:text-colorOrange" />
-              </button>
-
-              <img
-                className="size-[500px] object-cover object-center rounded-xl"
-                src={productsImages[currentSlideModal].src}
-                alt={productsImages[currentSlideModal].alt}
-              />
-
-              <button
-                className="absolute -right-6 top-1/2 -translate-y-1/2 size-12 bg-colorWhite rounded-full flex items-center justify-center"
-                onClick={handleNextSlide}
-              >
-                <GrFormNext className="size-7 text-colorBlack hover:text-colorOrange" />
-              </button>
-
-              <button
-                className="size-6 absolute inset-0 left-full -translate-x-full -top-10 text-colorWhite hover:scale-125 hover:text-colorOrange"
-                onClick={handleCloseModalImages}
-              >
-                <IoMdClose className="size-full" />
-              </button>
-            </div>
-
-            <div className="w-full flex items-center justify-center gap-8">
-              {productsThumbnailImages.map((thumbnail, index) => (
-                <div
-                  key={index}
-                  onClick={() => setCurrentSlideModal(index)}
-                  className={`${
-                    currentSlideModal === index
-                      ? "ring-colorOrange ring-2 scale-105"
-                      : "ring-0"
-                  } size-20 rounded-xl overflow-hidden cursor-pointer relative hover:scale-105`}
-                >
-                  <img src={thumbnail.src} alt={thumbnail.alt} />
-                  <div
-                    className={`${
-                      currentSlideModal === index ? "block" : "hidden"
-                    } absolute inset-0 bg-colorWhite/70`}
-                  ></div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ModalImagens
+            currentSlideModal={currentSlideModal}
+            setCurrentSlideModal={setCurrentSlideModal}
+            handlePrevSlide={handlePrevSlide}
+            handleNextSlide={handleNextSlide}
+            handleCloseModalImages={handleCloseModalImages}
+          />
         )}
 
         <div className="max-w-md flex flex-col gap-5 relative">
@@ -206,32 +136,12 @@ export function App() {
             <p className="line-through text-colorGrayishBlue">$250.00</p>
           </div>
 
-          <div className="flex h-12 gap-2 mt-2">
-            <div className="flex w-32 items-center justify-between px-3 bg-colorLightGrayishBlue rounded-lg">
-              <button
-                className="size-4 text-colorOrange hover:text-colorOrange/60 hover:scale-110"
-                onClick={handleMinusQuantity}
-              >
-                <TiMinus />
-              </button>
-              <span className="text-black text-sm font-bold">{quantity}</span>
-
-              <button
-                className="size-4 text-colorOrange hover:text-colorOrange/60 hover:scale-110"
-                onClick={handlePlusQuantity}
-              >
-                <TiPlus />
-              </button>
-            </div>
-
-            <button
-              className="flex gap-3 flex-1 items-center justify-center bg-colorOrange rounded-lg text-colorBlack font-bold text-sm hover:bg-colorOrange/60"
-              onClick={handleAddToCart}
-            >
-              <IoCartOutline className="size-4" />
-              Add to cart
-            </button>
-          </div>
+          <QuantityItemsCart
+            quantity={quantity}
+            handleMinusQuantity={handleMinusQuantity}
+            handlePlusQuantity={handlePlusQuantity}
+            handleAddToCart={handleAddToCart}
+          />
 
           {errorMessage && (
             <p className="absolute top-full text-red-500 text-sm mt-2">
