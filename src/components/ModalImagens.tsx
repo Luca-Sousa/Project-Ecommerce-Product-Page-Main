@@ -1,14 +1,7 @@
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { IoMdClose } from "react-icons/io";
 import { productsImages, productsThumbnailImages } from "../Datas";
-
-interface ModalImagensProps {
-  currentSlideModal: number;
-  setCurrentSlideModal: (index: number) => void;
-  handlePrevSlide: () => void;
-  handleNextSlide: () => void;
-  handleCloseModalImages: () => void;
-}
+import { ModalImagensProps } from "../types";
 
 export function ModalImagens({
   currentSlideModal,

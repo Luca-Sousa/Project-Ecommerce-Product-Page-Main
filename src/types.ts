@@ -30,3 +30,18 @@ export interface SlideImagesProps {
   handleOpenModalImages: () => void;
   handleThumbnailClick: (index: number) => void;
 }
+
+export interface ModalImagensProps {
+  currentSlideModal: number;
+  setCurrentSlideModal: (index: number) => void;
+  handlePrevSlide: () => void;
+  handleNextSlide: () => void;
+  handleCloseModalImages: () => void;
+}
+
+export interface QuantityItemsCartProps {
+  quantity: number;
+  handleMinusQuantity: () => void;
+  handlePlusQuantity: () => void;
+  handleAddToCart: () => void;
+}

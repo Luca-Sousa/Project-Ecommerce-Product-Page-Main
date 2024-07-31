@@ -1,12 +1,6 @@
 import { IoCartOutline } from "react-icons/io5";
 import { TiMinus, TiPlus } from "react-icons/ti";
-
-interface QuantityItemsCartProps {
-  quantity: number;
-  handleMinusQuantity: () => void;
-  handlePlusQuantity: () => number;
-  handleAddToCart: () => void;
-}
+import { QuantityItemsCartProps } from "../types";
 
 export function QuantityItemsCart({
   quantity,
