@@ -29,13 +29,15 @@ export interface SlideImagesProps {
   activeThumbnailImage: Image;
   handleOpenModalImages: () => void;
   handleThumbnailClick: (index: number) => void;
+  handlePrevSlide: () => void;
+  handleNextSlide: () => void;
 }
 
 export interface ModalImagensProps {
   currentSlideModal: number;
   setCurrentSlideModal: (index: number) => void;
-  handlePrevSlide: () => void;
-  handleNextSlide: () => void;
+  handlePrevSlideModal: () => void;
+  handleNextSlideModal: () => void;
   handleCloseModalImages: () => void;
 }
 

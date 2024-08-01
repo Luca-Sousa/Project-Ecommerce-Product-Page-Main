@@ -8,7 +8,7 @@ export function Cart({
   handleRemoveToCart,
 }: CartPros) {
   return (
-    <div className="w-96 h-fit absolute -left-1/2 -translate-x-1/2 top-12 rounded-lg bg-colorWhite shadow-default">
+    <div className="w-96 h-fit z-40 absolute -left-1/2 -translate-x-1/2 top-12 rounded-lg bg-colorWhite shadow-default 2xl:-left-2/3 2xl:-translate-x-2/3 2xs:inset-0 2xs:top-28 2xs:left-1/2 2xs:-translate-x-1/2 2xs:w-80">
       <h2 className="w-full text-colorBlack font-bold border-b p-6">Cart</h2>
 
       {itemAdded ? (

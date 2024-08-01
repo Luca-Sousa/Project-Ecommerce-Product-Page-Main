@@ -6,16 +6,16 @@ import { ModalImagensProps } from "../types";
 export function ModalImagens({
   currentSlideModal,
   setCurrentSlideModal,
-  handlePrevSlide,
-  handleNextSlide,
+  handlePrevSlideModal,
+  handleNextSlideModal,
   handleCloseModalImages,
 }: ModalImagensProps) {
   return (
-    <div className="fixed inset-0 z-50 bg-colorBlack/75 flex gap-6 flex-col items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-colorBlack/75 flex gap-6 flex-col items-center justify-center sm:hidden">
       <div className="relative">
         <button
           className="absolute -left-6 top-1/2 -translate-y-1/2 size-12 bg-colorWhite rounded-full flex items-center justify-center ring-1 ring-colorBlack text-colorBlack hover:text-colorOrange hover:ring-colorOrange"
-          onClick={handlePrevSlide}
+          onClick={handlePrevSlideModal}
         >
           <GrFormPrevious className="size-7" />
         </button>
@@ -28,7 +28,7 @@ export function ModalImagens({
 
         <button
           className="absolute -right-6 top-1/2 -translate-y-1/2 size-12 bg-colorWhite rounded-full flex items-center justify-center ring-1 ring-colorBlack text-colorBlack hover:text-colorOrange hover:ring-colorOrange"
-          onClick={handleNextSlide}
+          onClick={handleNextSlideModal}
         >
           <GrFormNext className="size-7" />
         </button>

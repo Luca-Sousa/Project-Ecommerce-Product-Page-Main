@@ -9,8 +9,8 @@ export function QuantityItemsCart({
   handleAddToCart,
 }: QuantityItemsCartProps) {
   return (
-    <div className="flex h-12 gap-2 mt-2">
-      <div className="flex w-32 items-center justify-between px-3 bg-colorLightGrayishBlue rounded-lg">
+    <div className="flex h-12 gap-2 mt-2 lg:max-w-lg lg:w-full lg:mx-auto 2xs:h-fit 2xs:max-w-xs 2xs:flex-col 3xs:max-w-full">
+      <div className="flex w-44 items-center justify-between px-3 bg-colorLightGrayishBlue rounded-lg 2xs:h-12 2xs:w-full">
         <button
           className="size-4 text-colorOrange hover:text-colorOrange/60 hover:scale-110"
           onClick={handleMinusQuantity}
@@ -28,7 +28,7 @@ export function QuantityItemsCart({
       </div>
 
       <button
-        className="flex gap-3 flex-1 items-center justify-center bg-colorOrange rounded-lg text-colorBlack font-bold text-sm hover:bg-colorOrange/60"
+        className="flex gap-3 flex-1 items-center justify-center bg-colorOrange rounded-lg text-colorBlack font-bold text-sm hover:bg-colorOrange/60 2xs:flex-auto 2xs:h-12"
         onClick={handleAddToCart}
       >
         <IoCartOutline className="size-4" />
